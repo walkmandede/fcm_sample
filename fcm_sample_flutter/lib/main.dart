@@ -58,6 +58,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   bool isLoading = false;
 
+  FcmService fcmService = FcmService();
+
   @override
   void initState() {
     fcmService.initialize().then((_) {

@@ -1,14 +1,11 @@
 import 'dart:developer';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   final data = message.data;
   log(data.toString(), name: 'FCMBG');
 }
-
-FcmService fcmService = FcmService();
 
 class FcmService {
   String? fcmToken;
@@ -28,29 +25,28 @@ class FcmService {
       sound: true,
     );
 
-    apnsToken = await _firebaseMessaging.getAPNSToken();
-    if (apnsToken != null) {
-      log(apnsToken.toString(), name: 'APNS');
-    }
-
-    await _updateToken();
+    await _updateAPNStoken();
+    await _updateFCMToken();
 
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       //TODO: implement in-app messgage display
-      log('Got a FCM message');
-      log(message.toMap().toString());
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      log("Notification tap from background: ${message.data}");
+      //TODO: implement bloc when user tap the noti and enter the app
     });
   }
 
-  Future<void> _updateToken() async {
-    final String? vapidKey = kIsWeb ? 'web vapid key' : null;
-    fcmToken = await _firebaseMessaging.getToken(vapidKey: vapidKey);
-    log(fcmToken.toString(), name: 'FCM');
+  Future<void> _updateAPNStoken() async {
+    apnsToken = await _firebaseMessaging.getAPNSToken();
+    if (apnsToken != null) {
+      log(apnsToken.toString(), name: 'APNS');
+    }
+  }
+
+  Future<void> _updateFCMToken() async {
+    fcmToken = await _firebaseMessaging.getToken();
   }
 }

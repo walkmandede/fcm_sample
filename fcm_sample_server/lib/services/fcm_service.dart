@@ -6,16 +6,15 @@ import 'package:http/http.dart' as http;
 const _fcmScope = 'https://www.googleapis.com/auth/firebase.messaging';
 
 class FcmService {
-  final String serviceAccountPath;
   ServiceAccountCredentials? _creds;
 
-  FcmService(this.serviceAccountPath);
+  final String _serviceAccountPath = './config/firebase_service_account_key.json';
 
   Future<void> _ensureCredentialsLoaded() async {
     if (_creds != null) return;
-    final file = File(serviceAccountPath);
+    final file = File(_serviceAccountPath);
     if (!await file.exists()) {
-      throw Exception('Service account JSON not found at $serviceAccountPath');
+      throw Exception('Service account JSON not found at $_serviceAccountPath');
     }
     final jsonStr = await file.readAsString();
     _creds = ServiceAccountCredentials.fromJson(jsonDecode(jsonStr));
@@ -24,16 +23,15 @@ class FcmService {
   Future<http.Client> _getAuthenticatedClient() async {
     await _ensureCredentialsLoaded();
     final client = await clientViaServiceAccount(_creds!, [_fcmScope]);
-    print(client.credentials.accessToken);
     return client;
   }
 
   Future<String> _projectId() async {
     await _ensureCredentialsLoaded();
-    final jsonStr = await File(serviceAccountPath).readAsString();
+    final jsonStr = await File(_serviceAccountPath).readAsString();
     final map = jsonDecode(jsonStr) as Map<String, dynamic>;
     final projectId = map['project_id'] as String?;
-    if (projectId == null) throw Exception('project_id not found in service account json');
+    if (projectId == null) throw Exception('$projectId not found in service account json');
     return projectId;
   }
 
