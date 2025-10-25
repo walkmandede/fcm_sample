@@ -39,8 +39,8 @@ class FcmService {
 
   Future<http.Response> sendToDevice({
     required String token,
-    String? title,
-    String? body,
+    required String title,
+    required String body,
     Map<String, String>? data,
   }) async {
     final client = await _getAuthenticatedClient();
@@ -50,11 +50,10 @@ class FcmService {
     final Map<String, dynamic> payload = {
       'message': {
         'token': token,
-        if (title != null || body != null)
-          'notification': {
-            if (title != null) 'title': title,
-            if (body != null) 'body': body,
-          },
+        "notification": {
+          "body": body,
+          "title": title,
+        },
         if (data != null && data.isNotEmpty) 'data': data,
       }
     };

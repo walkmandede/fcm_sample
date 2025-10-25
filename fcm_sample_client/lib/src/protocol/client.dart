@@ -21,7 +21,6 @@ class EndpointNotifications extends _i1.EndpointRef {
   @override
   String get name => 'notifications';
 
-  /// Send push to a single device token (admin or authorized callers)
   _i2.Future<String> sendToDevice(
     String token,
     String title,
