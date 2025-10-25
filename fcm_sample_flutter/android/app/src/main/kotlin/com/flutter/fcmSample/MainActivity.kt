@@ -1,4 +1,4 @@
-package com.example.fcm_sample_flutter
+package com.flutter.fcmSample
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -17,7 +17,16 @@ class FcmService {
   final _firebaseMessaging = FirebaseMessaging.instance;
 
   Future<void> initialize() async {
-    await FirebaseMessaging.instance.requestPermission(provisional: true);
+    //requesting notification permission
+    await FirebaseMessaging.instance.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
 
     apnsToken = await _firebaseMessaging.getAPNSToken();
     if (apnsToken != null) {
@@ -29,6 +38,7 @@ class FcmService {
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      //TODO: implement in-app messgage display
       log('Got a FCM message');
       log(message.toMap().toString());
     });

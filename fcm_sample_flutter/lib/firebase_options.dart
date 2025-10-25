@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBwnZ_CHpwxcQ6NKGFes_hrt9t2Kee7W78',
-    appId: '1:238185563841:android:a4cd9d568b837a13bbb640',
+    appId: '1:238185563841:android:21cd6dc6f7716342bbb640',
     messagingSenderId: '238185563841',
     projectId: 'fcm-test-c966f',
     storageBucket: 'fcm-test-c966f.firebasestorage.app',
@@ -59,10 +59,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyCU3AY1abLQrDXWboOVqf24B_yPuzoW9hE',
-    appId: '1:238185563841:ios:6f500201130326b5bbb640',
+    appId: '1:238185563841:ios:ffbe72c86753437ebbb640',
     messagingSenderId: '238185563841',
     projectId: 'fcm-test-c966f',
     storageBucket: 'fcm-test-c966f.firebasestorage.app',
-    iosBundleId: 'com.example.fcmSampleFlutter.RunnerTests',
+    iosBundleId: 'com.flutter.fcmSample',
   );
+
 }

@@ -3,6 +3,7 @@ import 'package:fcm_sample_client/fcm_sample_client.dart';
 import 'package:fcm_sample_flutter/fcm_service/fcm_service.dart';
 import 'package:fcm_sample_flutter/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:serverpod_flutter/serverpod_flutter.dart';
 
@@ -12,7 +13,9 @@ late String serverUrl;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   const serverUrlFromEnv = String.fromEnvironment('SERVER_URL');
   final serverUrl = serverUrlFromEnv.isEmpty ? 'http://$localhost:8080/' : serverUrlFromEnv;
 
@@ -51,6 +54,10 @@ class _MyHomePageState extends State<MyHomePage> {
   final TextEditingController _txtTitle = TextEditingController(text: '');
   final TextEditingController _txtBody = TextEditingController(text: '');
 
+  String respond = '';
+
+  bool isLoading = false;
+
   @override
   void initState() {
     fcmService.initialize().then((_) {
@@ -64,10 +71,18 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
   }
 
-  Future<void> _sendMessage() async {
+  Future<void> _sendMessage({required int delayedSecond}) async {
     log('Start sending fcm messge');
-    await Future.delayed(const Duration(seconds: 3));
-    await client.notifications.sendToDevice(_txtSendTo.text, _txtTitle.text, _txtBody.text);
+    isLoading = true;
+    setState(() {});
+    await Future.delayed(Duration(seconds: delayedSecond));
+    try {
+      respond = await client.notifications.sendToDevice(_txtSendTo.text, _txtTitle.text, _txtBody.text);
+    } catch (e) {
+      respond = e.toString();
+    }
+    isLoading = false;
+    setState(() {});
     log('End sending fcm messge');
   }
 
@@ -119,9 +134,21 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
                 FilledButton(
-                  onPressed: _sendMessage,
-                  child: Text('Send Message'),
-                )
+                  onPressed: isLoading ? null : () => _sendMessage(delayedSecond: 3),
+                  child: isLoading ? CupertinoActivityIndicator() : Text('Send Message in 3s'),
+                ),
+                FilledButton(
+                  onPressed: isLoading ? null : () => _sendMessage(delayedSecond: 45),
+                  child: isLoading ? CupertinoActivityIndicator() : Text('Send Message in 45s'),
+                ),
+                TextField(
+                  readOnly: true,
+                  maxLines: null,
+                  controller: TextEditingController(text: respond),
+                  decoration: InputDecoration(
+                    labelText: 'Respond',
+                  ),
+                ),
               ],
             ),
           ),
