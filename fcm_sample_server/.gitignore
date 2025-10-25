@@ -13,3 +13,4 @@ config/passwords.yaml
 
 # Firebase service account key for Firebase auth
 config/firebase_service_account_key.json
+config/fcm-test-c966f-firebase-adminsdk-fbsvc-9ae6c38743.json
