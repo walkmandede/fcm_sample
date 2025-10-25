@@ -1,0 +1,44 @@
+services:
+  # Development services
+  postgres:
+    image: pgvector/pgvector:pg16
+    ports:
+      - "8090:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: fcm_sample
+      POSTGRES_PASSWORD: "mMRkyPpuvv8e9dDJIO4dvel0bdiL4-lc"
+    volumes:
+      - fcm_sample_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:6.2.6
+    ports:
+      - "8091:6379"
+    command: redis-server --requirepass "FsBCievSYy9ftoDKgzZYZr7IPVxQ2B_f"
+    environment:
+      - REDIS_REPLICATION_MODE=master
+
+  # Test services
+  postgres_test:
+    image: pgvector/pgvector:pg16
+    ports:
+      - "9090:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: fcm_sample_test
+      POSTGRES_PASSWORD: "NzrQ55vD2ZtQwar3vJv0JMdL1ddE0ZbR"
+    volumes:
+      - fcm_sample_test_data:/var/lib/postgresql/data
+
+  redis_test:
+    image: redis:6.2.6
+    ports:
+      - "9091:6379"
+    command: redis-server --requirepass "91HQhbJIXD2xV-RcOqbYscOcr5hCWvbd"
+    environment:
+      - REDIS_REPLICATION_MODE=master
+
+volumes:
+  fcm_sample_data:
+  fcm_sample_test_data:

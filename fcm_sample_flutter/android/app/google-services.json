@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "238185563841",
+    "project_id": "fcm-test-c966f",
+    "storage_bucket": "fcm-test-c966f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:238185563841:android:a4cd9d568b837a13bbb640",
+        "android_client_info": {
+          "package_name": "com.example.fcm_sample_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwnZ_CHpwxcQ6NKGFes_hrt9t2Kee7W78"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:238185563841:android:035c1ea7d09c4c21bbb640",
+        "android_client_info": {
+          "package_name": "com.kph.fcm_sample"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwnZ_CHpwxcQ6NKGFes_hrt9t2Kee7W78"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
